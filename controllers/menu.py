@@ -1,5 +1,4 @@
-
-from .player import Valid
+from player import Valid
 from vues.menu import Views
 from model.player import Player
 
@@ -55,3 +54,6 @@ class MenuController:
         nameSearch = Query()
         db.search(nameSearch.name == reponse)
 '''
+
+menu = MenuController()
+menu.home()

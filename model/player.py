@@ -1,5 +1,5 @@
 from tinydb import TinyDB, Query
-from Views
+
 
 
 class Player:
@@ -27,6 +27,6 @@ class Player:
         db = TinyDB("player.json")
         db.insert(self.serialized_player(nom, firstname, date, sex, rank))
 
-    def searchByName(self):
-        nameSearch = Query()
-        db.search(nameSearch.name == reponse)
+    # def searchByName(self):
+    #     nameSearch = Query()
+    #     db.search(nameSearch.name == reponse)

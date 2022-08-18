@@ -5,7 +5,7 @@ class Views:
 
     @staticmethod
     def display_menu(menu):
-        for index, choice in menu:
+        for index, choice in menu.items():
             print(index, ')', choice)
         response = input('Choix : ')
         if response in menu:

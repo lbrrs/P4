@@ -1,11 +1,12 @@
-from controllers.menu import MenuController
+# from controllers.menu import MenuController
 import re
 
 
 class Valid:
 
     def __init__(self):
-        self.menu_control = MenuController()
+        # self.menu_control = MenuController()
+        pass
 
     #Name
     def is_valid_name(name):
@@ -62,7 +63,7 @@ class Valid:
         return sex.is_valid_sex(sex)
 
 
-    def get_sex(self):
+    def get_sex(self, sex=None):
         name = input("sex :")
         if self.is_valid_sex(sex):
             return sex
@@ -70,13 +71,13 @@ class Valid:
         return self.get_sex()
 
     # rank
-    def is_valid_rank(rank):
+    def is_valid_rank(self, rank):
         # regex
         pattern = '^[a-zA-Z]+$'
         re.match(pattern, rank)
-        return is_valid_rank(rank)
+        return self.is_valid_rank(rank)
 
-    def get_rank(self):
+    def get_rank(self, rank):
         name = input("rank :")
         if self.is_valid_rank(rank):
             return rank
