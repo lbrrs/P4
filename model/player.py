@@ -1,5 +1,5 @@
 from tinydb import TinyDB, Query
-from Views
+
 
 
 class Player:
@@ -23,10 +23,15 @@ class Player:
         return ser_player
 
     @staticmethod
-    def save_player(self, nom, firstname, date, sex, rank):
-        db = TinyDB("player.json")
-        db.insert(self.serialized_player(nom, firstname, date, sex, rank))
+    def save_player(nom, firstname, date, sex, rank):
+        db = TinyDB("../players.json")
+        db.insert(Player.serialized_player(nom, firstname, date, sex, rank))
 
-    def searchByName(self):
-        nameSearch = Query()
-        db.search(nameSearch.name == reponse)
+
+    @staticmethod
+    def deserialize_player(document):
+        player = Player(document["name"], document["firstname"], document["date"], document["sex"], document["rank"])
+        return player
+
+
+

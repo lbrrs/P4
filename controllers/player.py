@@ -1,18 +1,18 @@
-from controllers.menu import MenuController
+# from controllers.menu import MenuController
 import re
-
+from datetime import datetime
 
 class Valid:
 
     def __init__(self):
-        self.menu_control = MenuController()
+        # self.menu_control = MenuController()
+        pass
 
     #Name
-    def is_valid_name(name):
+    def is_valid_name(self, name):
         # regex
         pattern = '^[a-zA-Z]+$'
-        re.match(pattern, name)
-        return name.is_valid_name(name)
+        return re.match(pattern, name)
 
 
     def get_name(self):
@@ -24,11 +24,10 @@ class Valid:
 
 
     #Firstname
-    def is_valid_firstname(firstname):
+    def is_valid_firstname(self, firstname):
         # regex
         pattern = '^[a-zA-Z]+$'
-        re.match(pattern, firstname)
-        return firstname.is_valid_name(firstname)
+        return re.match(pattern, firstname)
 
 
     def get_firstname(self):
@@ -40,44 +39,44 @@ class Valid:
 
 
     #Date
-    def is_valid_date(date):
+    def is_valid_date(self, date):
         # regex
-        pattern = '^[0-9]+$'
-        re.match(pattern, date)
-        return date.is_valid_date(date)
+        try:
+            pattern = datetime.strptime(date, '%m-%d-%Y').date()
+            return True
+        except ValueError:
+            return False
+
 
 
     def get_date(self):
         date = input("date :")
-        if self.is_valid_name(date):
+        if self.is_valid_date(date):
             return date
         print('Invalid date')
         return self.get_date()
 
     #Sex
-    def is_valid_sex(sex):
+    def is_valid_sex(self, sex):
         # regex
         pattern = '^[a-zA-Z]+$'
-        re.match(pattern, sex)
-        return sex.is_valid_sex(sex)
-
+        return re.match(pattern, sex)
 
     def get_sex(self):
-        name = input("sex :")
+        sex = input("sex :")
         if self.is_valid_sex(sex):
             return sex
         print('Invalid sex')
         return self.get_sex()
 
     # rank
-    def is_valid_rank(rank):
+    def is_valid_rank(self, rank):
         # regex
-        pattern = '^[a-zA-Z]+$'
-        re.match(pattern, rank)
-        return is_valid_rank(rank)
+        pattern = '[0-9]{4}'
+        return re.match(pattern, rank)
 
     def get_rank(self):
-        name = input("rank :")
+        rank = input("rank :")
         if self.is_valid_rank(rank):
             return rank
         print('Invalid rank')

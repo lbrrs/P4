@@ -1,7 +1,12 @@
+from tinydb.operations import delete
 
-from .player import Valid
+from player import Valid
+from tournament import Tournoi
 from vues.menu import Views
 from model.player import Player
+from model.tournament import Tournament
+from tinydb import TinyDB, Query, where
+from tinydb.operations import delete
 
 
 class MenuController:
@@ -9,6 +14,8 @@ class MenuController:
     def __init__(self):
         self.menu_view = Views()
         self.validator = Valid()
+        self.validator_t = Tournoi()
+
 
     def home(self):
         menu = {
@@ -29,11 +36,13 @@ class MenuController:
             'C': 'Accueil'
         }
         response = self.menu_view.display_menu(menu)
-        if (response == 'A'):
+        if response == 'A':
             self.new_player()
-        elif (response == 'B'):
-            self.modif_player()
-        elif (response == 'C'):
+        elif response == 'B':
+            lst_player = self.modif_player()
+            player = self.menu_view.display_player(lst_player)
+            self.choose_modif(player)
+        elif response == 'C':
             self.home()
 
     def new_player(self):
@@ -45,13 +54,46 @@ class MenuController:
         print(name, firstname, date, sex, rank)
         Player.save_player(name, firstname, date, sex, rank)
 
-
-'''
     def modif_player(self):
-        #afficher liste joueurs
+        # afficher liste joueurs
+        db = TinyDB('../players.json')
+        table = db.all()
+        return table
+
+    def choose_modif(self, player):
+        db = TinyDB('../players.json')
+        db.remove(where('name') == player['name'])
+        self.new_player()
+
+    def tournament_gestion(self):
+        menu = {
+            'D': 'Créer un tournoi',
+            'E': 'Reprendre un tournoi',
+            'F': 'Supprimer un tournoi',
+            'G': 'Quitter'
+        }
+        response = self.menu_view.display_menu(menu)
+        if response == 'D':
+            lst_player = self.modif_player()
+            addPlayer = self.menu_view.display_players_tournament(lst_player)
+            self.new_tournament(addPlayer)
+        elif response == 'E':
+            self.modif_tournament()
+        elif response == 'F':
+            self.del_tournament()
+        elif response == 'G':
+            self.home()
+
+    def new_tournament(self, addPlayer):
+        name = self.validator_t.get_name_t()
+        place = self.validator_t.get_place()
+        date = self.validator_t.get_date_t()
+        nbRounds = self.validator_t.get_nbRounds()
+        time = self.validator_t.get_time()
+        description = self.validator_t.get_description()
+        player = list(addPlayer)
+        Tournament.save_tournament(name, place, date, [], nbRounds, time, player, description)
 
 
-    def searchByName(self):
-        nameSearch = Query()
-        db.search(nameSearch.name == reponse)
-'''
+menu = MenuController()
+menu.home()
