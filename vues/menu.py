@@ -4,7 +4,7 @@ from model.player import Player
 class Views:
 
     def __init__(self):
-        self.player = Player()
+        pass
 
 
     @staticmethod
@@ -59,26 +59,22 @@ class Views:
 
     @staticmethod
     def display_players_tournament(lst_player):
-        lst_plr_t = set()
         lst_ser = list()
-        for i in lst_player:
-            lst_ser.append(Player.deserialize_player(lst_player[i]))
+        for p in lst_player:
+            lst_ser.append(Player.deserialize_player(p))
 
-
-        for i in lst_player:
-            lst_plr_t.add(i)
-        while len(lst_plr_t) >= 8:
+        while len(lst_ser) >= 8:
             for count, player in enumerate(lst_player, 1):
                 print(f'{count}: {player}')
-            len_prev = len(lst_plr_t)
+            len_prev = len(lst_ser)
             pattern = '[0-9]{1}'
             pattern1 = '[0-9]{2}'
             reponse = input('Choix : ')
             if re.match(pattern, reponse) is not None or re.match(pattern1, reponse) is not None:
-                lst_plr_t.add(reponse)
+                lst_ser.append(reponse)
 
-            if len(lst_plr_t) > len_prev:
-                print(lst_plr_t)
+            if len(lst_ser) > len_prev:
+                print(lst_ser)
             else:
                 print('Choix incorrect')
-        return lst_plr_t
+        return lst_ser
