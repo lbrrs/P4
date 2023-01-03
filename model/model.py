@@ -17,10 +17,11 @@ class Tournoi:
         self.player = []
         self.time = time
         self.description = description
+        self.actual_rounds = 1
 
 
 class Round:
-    def __init__(self, name, date_start, date_end,):
+    def __init__(self, name, date_start, date_end):
         self.name = name
         self.date_start = date_start
         self.date_end = date_end
@@ -28,6 +29,7 @@ class Round:
 
 
 class Match:
+
     def __init__(self, result):
         self.result = result
         self.player = []

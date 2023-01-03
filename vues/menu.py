@@ -1,11 +1,12 @@
 import re
 from model.player import Player
+from model.model import Match
+from matching import Matching
 
 class Views:
 
     def __init__(self):
         pass
-
 
     @staticmethod
     def display_menu(menu):
@@ -60,10 +61,7 @@ class Views:
     @staticmethod
     def display_players_tournament(lst_player):
         lst_ser = list()
-        for p in lst_player:
-            lst_ser.append(Player.deserialize_player(p))
-
-        while len(lst_ser) >= 8:
+        while len(lst_ser) < 8:
             for count, player in enumerate(lst_player, 1):
                 print(f'{count}: {player}')
             len_prev = len(lst_ser)
@@ -78,3 +76,25 @@ class Views:
             else:
                 print('Choix incorrect')
         return lst_ser
+
+    @staticmethod
+    def display_tournament_modif(lst_tournament):
+        for count, tournament in enumerate(lst_tournament, 1):
+            print(f'{count}: {tournament}')
+        reponse = input('Choix : ')
+        if int(reponse) <= len(lst_tournament):
+            print(lst_tournament[int(reponse)-1])
+        else:
+            print('Choix incorrect')
+        return lst_tournament[int(reponse)-1]
+
+    def display_tournament_result(self, round):
+        for count, matching in enumerate(round.match, 1):
+            print(f'{count}: {matching[0].__str__()}'),
+            print(f'{count}: {matching[1].__str__()}')
+            reponse1 = input('1 = Victoire Joueur 1, 2 = Victoire Joueur 2, 3 = Match nul \n Resultat : ')
+            matching.result = reponse1
+            if reponse1 not in [1, 2, 3]:
+                print('Choix incorrect')
+                return self.display_tournament(round)
+        return round

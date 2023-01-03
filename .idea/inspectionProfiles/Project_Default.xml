@@ -9,5 +9,14 @@
         </list>
       </option>
     </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="list.search" />
+          <option value="list.doc_id" />
+          <option value="list.rank" />
+        </list>
+      </option>
+    </inspection_tool>
   </profile>
 </component>
