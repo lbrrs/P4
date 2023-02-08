@@ -1,84 +1,37 @@
-from controllers.menu import MenuController
-import re
+from controller.database import save_db, update_player_rank
+from models.player import Player
+from views.player import CreatePlayer
 
 
-class Valid:
+def create_player():
 
-    def __init__(self):
-        self.menu_control = MenuController()
+    # Récupération des infos du joueur
+    user_entries = CreatePlayer().display_menu()
 
-    #Name
-    def is_valid_name(name):
-        # regex
-        pattern = '^[a-zA-Z]+$'
-        re.match(pattern, name)
-        return name.is_valid_name(name)
+    # Création du joueur
+    player = Player(
+        user_entries['name'],
+        user_entries['first_name'],
+        user_entries['dob'],
+        user_entries['sex'],
+        user_entries['total_score'],
+        user_entries['rank'])
 
+    # serialization:
+    serialized_player = player.get_serialized_player()
+    print(serialized_player)
 
-    def get_name(self):
-        name = input("name :")
-        if self.is_valid_name(name):
-            return name
-        print('Invalid name')
-        return self.get_name()
+    # Sauvegarde du joueur dans la database
+    save_db("players", serialized_player)
 
-
-    #Firstname
-    def is_valid_firstname(firstname):
-        # regex
-        pattern = '^[a-zA-Z]+$'
-        re.match(pattern, firstname)
-        return firstname.is_valid_name(firstname)
+    return player
 
 
-    def get_firstname(self):
-        firstname = input("firstname :")
-        if self.is_valid_firstname(firstname):
-            return firstname
-        print('Invalid firstname')
-        return self.get_firstname()
-
-
-    #Date
-    def is_valid_date(date):
-        # regex
-        pattern = '^[0-9]+$'
-        re.match(pattern, date)
-        return date.is_valid_date(date)
-
-
-    def get_date(self):
-        date = input("date :")
-        if self.is_valid_name(date):
-            return date
-        print('Invalid date')
-        return self.get_date()
-
-    #Sex
-    def is_valid_sex(sex):
-        # regex
-        pattern = '^[a-zA-Z]+$'
-        re.match(pattern, sex)
-        return sex.is_valid_sex(sex)
-
-
-    def get_sex(self):
-        name = input("sex :")
-        if self.is_valid_sex(sex):
-            return sex
-        print('Invalid sex')
-        return self.get_sex()
-
-    # rank
-    def is_valid_rank(rank):
-        # regex
-        pattern = '^[a-zA-Z]+$'
-        re.match(pattern, rank)
-        return is_valid_rank(rank)
-
-    def get_rank(self):
-        name = input("rank :")
-        if self.is_valid_rank(rank):
-            return rank
-        print('Invalid rank')
-        return self.get_rank()
+def update_rankings(player, rank, score=True):
+    if score:
+        player.total_score += player.tournament_score
+    player.rank = rank
+    serialized_player = player.get_serialized_player(save_turnament_score=True)
+    print(serialized_player['name'])
+    update_player_rank("players", serialized_player)
+    print(f"Update du rang de {player}:\nScore total: {player.total_score}\nRang: {player.rank}")
